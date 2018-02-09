@@ -3,7 +3,7 @@
 
 // Constants
 const START_SPEED = 1;
-const START_WAVE = 8;
+const START_WAVE = 1;
 const MAX_SPEED = 4;
 const PLAYER_SPEED = 1.5;
 const PLAYER_SIZE = 20;
