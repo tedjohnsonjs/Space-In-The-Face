@@ -53,7 +53,6 @@ var startWave = false;
 var powerupSprites = [tex_powerup1, tex_powerup2, tex_powerup3, tex_powerup4, tex_powerup5];
 var score = 0;
 var displayWave = 0;
-var numAliens = 0;
 
 // Waves
 var waves = [
@@ -334,7 +333,8 @@ function Alien(_x, _y, _type)
 {
 	this.x = _x;
 	this.y = _y;
-	if (_type == 1)
+	this.type = _type;
+	if (this.type == 1)
 	{
 		this.x = -((Math.random() * 250) + 20);
 		this.y = (Math.random() * 100) + 100;
@@ -344,12 +344,12 @@ function Alien(_x, _y, _type)
 			this.x = canvas.width - this.x;
 	}
 
-	this.sprite = alienSprites[_type];
-	this.health = alienHealths[_type];
-	this.speed = alienSpeeds[_type];
-	this.size = alienSizes[_type];
-	this.bulletSpeed = alienBulletSpeeds[_type];
-	this.pattern = alienPatterns[_type];
+	this.sprite = alienSprites[this.type];
+	this.health = alienHealths[this.type];
+	this.speed = alienSpeeds[this.type];
+	this.size = alienSizes[this.type];
+	this.bulletSpeed = alienBulletSpeeds[this.type];
+	this.pattern = alienPatterns[this.type];
 
 	this.stepInPattern = Math.floor(Math.random() * this.pattern.length * 10);
 	this.dir = 1;
@@ -447,7 +447,7 @@ function Alien(_x, _y, _type)
 		if (Math.floor(Math.random() * 8) == 0)
 			powerups.push(new Powerup(this.x, this.y));
 
-		score +=  alienValues[_type];
+		score +=  alienValues[this.type];
 
 		this.index = aliens.indexOf(this);
 		aliens.splice(this.index, 1);
