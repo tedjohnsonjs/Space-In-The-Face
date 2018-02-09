@@ -24,24 +24,24 @@ const UI_POWERUP_SIZE = 0.025;
 const UI_POWERUP_ADJUST = 0.0125;
 
 // Textures
-var tex_player1 = new Image(); tex_player1.src = "resources/player1.png";
-var tex_player2 = new Image(); tex_player2.src = "resources/player2.png";
-var tex_alien1 = new Image(); tex_alien1.src = "resources/alien1.png";
-var tex_alien2 = new Image(); tex_alien2.src = "resources/alien2.png";
-var tex_alien3 = new Image(); tex_alien3.src = "resources/alien3.png";
-var tex_alien4 = new Image(); tex_alien4.src = "resources/alien4.png";
-var tex_alien5 = new Image(); tex_alien5.src = "resources/alien5.png";
-var tex_heart1 = new Image(); tex_heart1.src = "resources/heart1.png";
-var tex_heart2 = new Image(); tex_heart2.src = "resources/heart2.png";
-var tex_powerup1 = new Image(); tex_powerup1.src = "resources/powerup1.png";
-var tex_powerup2 = new Image(); tex_powerup2.src = "resources/powerup2.png";
-var tex_powerup3 = new Image(); tex_powerup3.src = "resources/powerup3.png";
-var tex_powerup4 = new Image(); tex_powerup4.src = "resources/powerup4.png";
-var tex_powerup5 = new Image(); tex_powerup5.src = "resources/powerup5.png";
+var tex_player1 = new Image(); tex_player1.src = 'resources/player1.png';
+var tex_player2 = new Image(); tex_player2.src = 'resources/player2.png';
+var tex_alien1 = new Image(); tex_alien1.src = 'resources/alien1.png';
+var tex_alien2 = new Image(); tex_alien2.src = 'resources/alien2.png';
+var tex_alien3 = new Image(); tex_alien3.src = 'resources/alien3.png';
+var tex_alien4 = new Image(); tex_alien4.src = 'resources/alien4.png';
+var tex_alien5 = new Image(); tex_alien5.src = 'resources/alien5.png';
+var tex_heart1 = new Image(); tex_heart1.src = 'resources/heart1.png';
+var tex_heart2 = new Image(); tex_heart2.src = 'resources/heart2.png';
+var tex_powerup1 = new Image(); tex_powerup1.src = 'resources/powerup1.png';
+var tex_powerup2 = new Image(); tex_powerup2.src = 'resources/powerup2.png';
+var tex_powerup3 = new Image(); tex_powerup3.src = 'resources/powerup3.png';
+var tex_powerup4 = new Image(); tex_powerup4.src = 'resources/powerup4.png';
+var tex_powerup5 = new Image(); tex_powerup5.src = 'resources/powerup5.png';
 
 // Variables
-var canvas = document.getElementById("canvas");
-var ctx = canvas.getContext("2d");
+var canvas = document.getElementById('canvas');
+var ctx = canvas.getContext('2d');
 var keysDown = [];
 var inGame = false;
 var playingIntro = false;
@@ -104,16 +104,16 @@ var alienPatterns = [pattern_1, pattern_2, pattern_3, pattern_4, pattern_5];
 // ==================== CLASSES ====================
 
 // --- Player Class ---
-function Player(_x, _y, _sprite)
+function Player (_x, _y, _sprite)
 {
 	this.x = _x;
 	this.y = _y;
 	this.sprite = _sprite;
-	
+
 	if (this.sprite == tex_player1)
-	{ this.upKey = 87; this.downKey = 83; this.leftKey = 65; this.rightKey = 68; this.shootKey = 87; this.playerNum = 1; }//81; }
+	{ this.upKey = 87; this.downKey = 83; this.leftKey = 65; this.rightKey = 68; this.shootKey = 87; this.playerNum = 1; }
 	else
-	{ this.upKey = 38; this.downKey = 40; this.leftKey = 37; this.rightKey = 39; this.shootKey = 38; this.playerNum = 2; }//85; }
+	{ this.upKey = 38; this.downKey = 40; this.leftKey = 37; this.rightKey = 39; this.shootKey = 38; this.playerNum = 2; }
 
 	this.health = PLAYER_HEALTH;
 	this.alive = true;
@@ -124,8 +124,8 @@ function Player(_x, _y, _sprite)
 	this.speedBoost = 0;
 	this.bulletBoost = 0;
 	this.immortalBoost = 0;
-	
-	this.Update = function()
+
+	this.Update = function ()
 	{
 		if (this.alive)
 		{
@@ -150,7 +150,7 @@ function Player(_x, _y, _sprite)
 				// Collisions from bullets
 				for (var i = 0; i < bullets.length; i++)
 				{
-					if (bullets[i].team == "Aliens")
+					if (bullets[i].team == 'Aliens')
 					{
 						if (Math.abs(this.x - bullets[i].x) < PLAYER_SIZE / 1.5 && Math.abs(this.y - bullets[i].y) < PLAYER_SIZE / 1.5)
 						{
@@ -282,7 +282,7 @@ function Player(_x, _y, _sprite)
 
 					if (keysDown[this.shootKey] && this.loaded == 0)
 					{
-						bullets.push(new Bullet(this.x, this.y, BULLET_SPEED, "Players"));
+						bullets.push(new Bullet(this.x, this.y, BULLET_SPEED, 'Players'));
 						this.loaded = PLAYER_SHOOTDELAY * this.actualBulletBoost;
 					}
 				}
@@ -291,14 +291,14 @@ function Player(_x, _y, _sprite)
 	}
 
 	// Draws to frame
-	this.Draw = function()
+	this.Draw = function ()
 	{
 		if (this.alive)
 		{
 			if (this.immortalBoost > 0) {
 				ctx.arc(this.x, this.y, PLAYER_SIZE, 0, 2 * Math.PI, false);
-				ctx.fillStyle = "rgb(0,150,255)"; ctx.fill();
-				ctx.lineWidth = 3; ctx.strokeStyle = "rgb(0,255,255)"; ctx.stroke();
+				ctx.fillStyle = 'rgb(0,150,255)'; ctx.fill();
+				ctx.lineWidth = 3; ctx.strokeStyle = 'rgb(0,255,255)'; ctx.stroke();
 			}
 
 			ctx.drawImage(
@@ -311,11 +311,11 @@ function Player(_x, _y, _sprite)
 	}
 
 	// Destroys the player
-	this.Death = function()
+	this.Death = function ()
 	{
 		for (var i = 0; i < NUM_DEBRIS_DESTROY; i++)
 			debris.push(new Debris(this.x, this.y));
-		
+
 		this.alive = false;
 		this.hasControl = false;
 		this.speedBoost = 0;
@@ -329,7 +329,7 @@ function Player(_x, _y, _sprite)
 }
 
 // --- Alien Class ---
-function Alien(_x, _y, _type)
+function Alien (_x, _y, _type)
 {
 	this.x = _x;
 	this.y = _y;
@@ -355,12 +355,12 @@ function Alien(_x, _y, _type)
 	this.dir = 1;
 	this.firedShot = false;
 
-	this.Update = function()
+	this.Update = function ()
 	{
 		// Collisions from bullets
 		for (var i = 0; i < bullets.length; i++)
 		{
-			if (bullets[i].team == "Players")
+			if (bullets[i].team == 'Players')
 			{
 				if (Math.abs(this.x - bullets[i].x) < this.size / 1.5 && Math.abs(this.y - bullets[i].y) < this.size / 1.5)
 				{
@@ -397,22 +397,22 @@ function Alien(_x, _y, _type)
 			case 0:
 				this.y -= this.speed;
 				break;
-			
+
 			case 1:
 				this.y += this.speed;
 				break;
-			
+
 			case 2:
 				this.x -= this.speed * this.dir;
 				break;
-			
+
 			case 3:
 				this.x += this.speed * this.dir;
 				break;
 
 			case 4:
 				if (!this.firedShot)
-					bullets.push(new Bullet(this.x, this.y, -this.bulletSpeed, "Aliens"));
+					bullets.push(new Bullet(this.x, this.y, -this.bulletSpeed, 'Aliens'));
 				this.firedShot = true;
 				break;
 
@@ -428,7 +428,7 @@ function Alien(_x, _y, _type)
 	}
 
 	// Draws to frame
-	this.Draw = function()
+	this.Draw = function ()
 	{
 		ctx.drawImage(
 			this.sprite,
@@ -439,7 +439,7 @@ function Alien(_x, _y, _type)
 	}
 
 	// Removes itself from list
-	this.Destroy = function()
+	this.Destroy = function ()
 	{
 		for (var i = 0; i < NUM_DEBRIS_DESTROY; i++)
 			debris.push(new Debris(this.x, this.y));
@@ -455,14 +455,14 @@ function Alien(_x, _y, _type)
 }
 
 // --- Bullet Class ---
-function Bullet(_x, _y, _speed, _team)
+function Bullet (_x, _y, _speed, _team)
 {
 	this.x = _x;
 	this.y = _y;
 	this.speed = _speed;
 	this.team = _team;
 
-	this.Update = function()
+	this.Update = function ()
 	{
 		// Moves bullet
 		this.y -= this.speed;
@@ -472,13 +472,13 @@ function Bullet(_x, _y, _speed, _team)
 	}
 
 	// Draw to frame
-	this.Draw = function()
+	this.Draw = function ()
 	{
 		ctx.rect(this.x - BULLET_SIZE/2, this.y - BULLET_SIZE/2, BULLET_SIZE, BULLET_SIZE);
 	}
 
 	// Removes itself from list
-	this.Destroy = function()
+	this.Destroy = function ()
 	{
 		this.index = bullets.indexOf(this);
 		bullets.splice(this.index, 1);
@@ -486,12 +486,12 @@ function Bullet(_x, _y, _speed, _team)
 }
 
 // --- Dust Class ---
-function Dust()
+function Dust ()
 {
 	this.x = Math.floor(Math.random() * canvas.width);
 	this.y = Math.floor(Math.random() * canvas.height);
 
-	this.Update = function()
+	this.Update = function ()
 	{
 		// Moves dust
 		this.y += speed;
@@ -502,18 +502,18 @@ function Dust()
 	}
 
 	// Draw to frame
-	this.Draw = function()
+	this.Draw = function ()
 	{ ctx.rect(this.x, this.y, 1, 1); }
 }
 
 // --- Exhaust Class ---
-function Exhaust(_x, _y)
+function Exhaust (_x, _y)
 {
 	this.x = _x + Math.floor(Math.random() * 8) - 4;
 	this.y = _y;
 	this.lifetime = Math.floor(Math.random() * 50);
 
-	this.Update = function()
+	this.Update = function ()
 	{
 		// Moves exhaust
 		this.y += speed;
@@ -529,14 +529,14 @@ function Exhaust(_x, _y)
 	}
 
 	// Draws to frame
-	this.Draw = function()
+	this.Draw = function ()
 	{
 		ctx.rect(this.x - EXHAUST_SIZE / 2, this.y - EXHAUST_SIZE / 2, EXHAUST_SIZE, EXHAUST_SIZE);
 	}
 }
 
 // --- Debris Class ---
-function Debris(_x, _y)
+function Debris (_x, _y)
 {
 	this.x = _x;
 	this.y = _y;
@@ -544,7 +544,7 @@ function Debris(_x, _y)
 	this.ySpeed = Math.random() * DEBRIS_SPEED - DEBRIS_SPEED/2;
 	this.lifetime = Math.floor(Math.random() * 100);
 
-	this.Update = function()
+	this.Update = function ()
 	{
 		// Moves debris
 		this.x += this.xSpeed;
@@ -560,21 +560,21 @@ function Debris(_x, _y)
 	}
 
 	// Draws to frame
-	this.Draw = function()
+	this.Draw = function ()
 	{
 		ctx.rect(this.x - DEBRIS_SIZE / 2, this.y - DEBRIS_SIZE / 2, DEBRIS_SIZE, DEBRIS_SIZE);
 	}
 }
 
 // --- Powerup Class ---
-function Powerup(_x, _y)
+function Powerup (_x, _y)
 {
 	this.x = _x;
 	this.y = _y;
 	this.type = Math.floor(Math.random() * powerupSprites.length);
 	this.sprite = powerupSprites[this.type];
 
-	this.Update = function()
+	this.Update = function ()
 	{
 		// Moves powerup
 		this.y += POWERUP_SPEED;
@@ -587,13 +587,13 @@ function Powerup(_x, _y)
 	}
 
 	// Draws to frame
-	this.Draw = function()
+	this.Draw = function ()
 	{
 		ctx.drawImage(this.sprite, this.x - POWERUP_SIZE / 2, this.y - POWERUP_SIZE / 2, POWERUP_SIZE, POWERUP_SIZE);
 	}
 
 	// Removes itself from list
-	this.Destroy = function()
+	this.Destroy = function ()
 	{
 		this.index = powerups.indexOf(this);
 		powerups.splice(this.index, 1);
@@ -604,7 +604,7 @@ function Powerup(_x, _y)
 // ==================== FUNCTIONS ====================
 
 // --- Starts Game ---
-function StartGame()
+function StartGame ()
 {
 	// Spawns players
 	player1 = new Player(150, canvas.height + 50, tex_player1);
@@ -617,7 +617,7 @@ function StartGame()
 }
 
 // --- Sets Up Menu and Game ---
-function SetupGame()
+function SetupGame ()
 {
 	// Displays menu
 	titleY = 0;
@@ -628,7 +628,7 @@ function SetupGame()
 }
 
 // --- Main Loop ---
-function Update()
+function Update ()
 {
 	for (var i = 0; i < dusts.length; i++) dusts[i].Update(); // Updates dusts
 	for (var i = 0; i < exhausts.length; i++) exhausts[i].Update(); // Updates exhausts
@@ -669,7 +669,7 @@ function Update()
 }
 
 // --- Controls Waves ---
-function UpdateWave()
+function UpdateWave ()
 {
 	if (startWave)
 	{
@@ -706,7 +706,7 @@ function UpdateWave()
 
 		if (player1.health < PLAYER_HEALTH) player1.health++;
 		if (player2.health < PLAYER_HEALTH) player2.health++;
-		
+
 		if (curWave != 1)
 		{
 			powerups.push(new Powerup(Math.random() * canvas.width, -Math.random() * 100));
@@ -716,7 +716,7 @@ function UpdateWave()
 }
 
 // --- Draws Frame to Canvas ---
-function Draw()
+function Draw ()
 {
 	// Background
 	ctx.beginPath();
@@ -725,7 +725,7 @@ function Draw()
 	// Dusts
 	ctx.beginPath();
 	for (var i = 0; i < dusts.length; i++) dusts[i].Draw();
-	ctx.fillStyle = "white";
+	ctx.fillStyle = 'white';
 	ctx.fill();
 
 	// Debris
@@ -733,8 +733,8 @@ function Draw()
 	{
 		ctx.beginPath();
 		debris[i].Draw();
-		if (Math.floor(Math.random() * 2) == 0) ctx.fillStyle = "orange";
-		else ctx.fillStyle = "red";
+		if (Math.floor(Math.random() * 2) == 0) ctx.fillStyle = 'orange';
+		else ctx.fillStyle = 'red';
 		ctx.fill();
 	}
 
@@ -743,17 +743,17 @@ function Draw()
 		// Exhausts
 		ctx.beginPath();
 		for (var i = 0; i < exhausts.length; i++) exhausts[i].Draw();
-		ctx.fillStyle = "lightgrey";
+		ctx.fillStyle = 'lightgrey';
 		ctx.fill();
 
 		// Powerups
 		ctx.beginPath();
 		for (var i = 0; i < powerups.length; i++) powerups[i].Draw();
-	
+
 		// Bullets
 		ctx.beginPath();
 		for (var i = 0; i < bullets.length; i++) bullets[i].Draw();
-		ctx.fillStyle = "white";
+		ctx.fillStyle = 'white';
 		ctx.fill();
 
 		// Players
@@ -766,48 +766,48 @@ function Draw()
 		ctx.beginPath();
 		for (var i = 0; i < aliens.length; i++) aliens[i].Draw();
 	}
-	
+
 	if (!inGame || playingIntro)
 	{
 		// Title text
 		ctx.beginPath();
-		ctx.fillStyle = "#6b005d";
-		ctx.font = "50px Arial";
-		ctx.fillText("SPACE IN THE", canvas.width/2 - 165, 97 - titleY);
-		ctx.fillStyle = "purple";
-		ctx.font = "50px Arial";
-		ctx.fillText("SPACE IN THE", canvas.width/2 - 165, 100 - titleY);
-		
+		ctx.fillStyle = '#6b005d';
+		ctx.font = '50px Arial';
+		ctx.fillText('SPACE IN THE', canvas.width/2 - 165, 97 - titleY);
+		ctx.fillStyle = 'purple';
+		ctx.font = '50px Arial';
+		ctx.fillText('SPACE IN THE', canvas.width/2 - 165, 100 - titleY);
+
 		// Shaking
 		var addedX = (Math.random() * 3) - 1.5;
 		var addedY = (Math.random() * 3) - 1.5;
 
-		ctx.fillStyle = "darkred";
-		ctx.font = "100px Arial";
-		ctx.fillText("FACE", (canvas.width/2 - 130) + addedX, (190 - titleY) + addedY);
-		ctx.fillStyle = "red";
-		ctx.font = "100px Arial";
-		ctx.fillText("FACE", (canvas.width/2 - 130) + addedX, ((193 - titleY) + addedY));
+		ctx.fillStyle = 'darkred';
+		ctx.font = '100px Arial';
+		ctx.fillText('FACE', (canvas.width/2 - 130) + addedX, (190 - titleY) + addedY);
+		ctx.fillStyle = 'red';
+		ctx.font = '100px Arial';
+		ctx.fillText('FACE', (canvas.width/2 - 130) + addedX, ((193 - titleY) + addedY));
 
 		// Line
 		ctx.beginPath();
 		ctx.rect((canvas.width/2 - 130) + addedX, (200 - titleY) + addedY, 265, 10);
-		ctx.fillStyle = "darkred";
+		ctx.fillStyle = 'darkred';
 		ctx.fill();
 		ctx.beginPath();
 		ctx.rect((canvas.width/2 - 130) + addedX, (205 - titleY) + addedY, 265, 10);
-		ctx.fillStyle = "red";
+		ctx.fillStyle = 'red';
 		ctx.fill();
 
 		// Subtitles
 		ctx.beginPath();
-		ctx.fillStyle = "white";
-		ctx.font = "15px Arial";
-		ctx.fillText("Press any key!", canvas.width/2 - 50, canvas.height - 100 + titleY);
-		ctx.fillText("WASD - Player 1", canvas.width/2 - 55, canvas.height - 70 + titleY);
-		ctx.fillText("ARROWS - Player 2", canvas.width/2 - 65, canvas.height - 50 + titleY);
-		ctx.font = "10px Arial";
-		ctx.fillText("Ted Johnson - 02/18", canvas.width/2 - 45, canvas.height - 10 + titleY);
+		ctx.fillStyle = 'white';
+		ctx.font = '15px Arial';
+		ctx.fillText('Press any key!', canvas.width/2 - 50, canvas.height - 100 + titleY);
+		ctx.fillText('WASD - Player 1', canvas.width/2 - 55, canvas.height - 70 + titleY);
+		ctx.fillText('ARROWS - Player 2', canvas.width/2 - 65, canvas.height - 50 + titleY);
+		ctx.font = '10px Arial';
+		ctx.fillText('Ted Johnson - 02/18', canvas.width/2 - 45, canvas.height - 10 + titleY);
 	}
 
 	// Draws UI
@@ -815,56 +815,56 @@ function Draw()
 }
 
 // --- Draws UI to Canvas
-function DrawUI()
+function DrawUI ()
 {
 	// Top Panel
 	ctx.beginPath();
 	ctx.rect(0, titleY/5 - 5, canvas.width, 5);
-	ctx.fillStyle = "#303030";
+	ctx.fillStyle = '#303030';
 	ctx.fill();
 	ctx.beginPath();
 	ctx.rect(0, -5, canvas.width, titleY/5);
-	ctx.fillStyle = "grey";
+	ctx.fillStyle = 'grey';
 	ctx.fill();
 
 	// Bottom Panel
 	ctx.beginPath();
 	ctx.rect(0, (canvas.height + 150) - (titleY), canvas.width, 5)
-	ctx.fillStyle = "#303030";
+	ctx.fillStyle = '#303030';
 	ctx.fill();
 	ctx.beginPath();
 	ctx.rect(0, (canvas.height + 155) - (titleY), canvas.width, 50)
-	ctx.fillStyle = "grey";
+	ctx.fillStyle = 'grey';
 	ctx.fill();
 
 	if (inGame)
 	{
 		// Wave Number
 		ctx.beginPath();
-		ctx.fillStyle = "white";
-		ctx.font = "20px Arial";
+		ctx.fillStyle = 'white';
+		ctx.font = '20px Arial';
 		if (!playingIntro && curWave != 0)
-			ctx.fillText("Wave " + curWave, 10, titleY/8);
+			ctx.fillText('Wave ' + curWave, 10, titleY/8);
 		else
-			ctx.fillText("Ready...", 10, titleY/8);
+			ctx.fillText('Ready...', 10, titleY/8);
 
 		// Display new wave text
 		ctx.beginPath();
-		ctx.fillStyle = "white";
-		ctx.font = "50px ar destine";
+		ctx.fillStyle = 'white';
+		ctx.font = '50px ar destine';
 		if (displayWave > 0)
 		{
 			displayWave--;
-			ctx.fillText("Wave " + curWave, (displayWave*4)-200, canvas.height/2);
+			ctx.fillText('Wave ' + curWave, (displayWave*4)-200, canvas.height/2);
 		}
 		else
 			displayWave = 0;
 
 		// Score
 		ctx.beginPath();
-		ctx.fillStyle = "white";
-		ctx.font = "20px Arial";
-		ctx.fillText("" + score, canvas.width - 100, titleY/8);
+		ctx.fillStyle = 'white';
+		ctx.font = '20px Arial';
+		ctx.fillText('' + score, canvas.width - 100, titleY/8);
 
 		//Hearts
 		for (var i = 0; i < player1.health; i++)
@@ -889,34 +889,34 @@ function DrawUI()
 		// Powerup display circles 1
 		ctx.beginPath();
 		ctx.arc(23, canvas.height - 67 + (200 - titleY), UI_POWERUP_SIZE * POWERUP_LENGTH / 2, 0, 2 * Math.PI, false);
-		ctx.fillStyle = "#606060"; ctx.fill();
-		ctx.lineWidth = 2; ctx.strokeStyle = "grey"; ctx.stroke();
+		ctx.fillStyle = '#606060'; ctx.fill();
+		ctx.lineWidth = 2; ctx.strokeStyle = 'grey'; ctx.stroke();
 
 		ctx.beginPath();
 		ctx.arc(53, canvas.height - 67 + (200 - titleY), UI_POWERUP_SIZE * POWERUP_LENGTH / 2, 0, 2 * Math.PI, false);
-		ctx.fillStyle = "#606060"; ctx.fill();
-		ctx.lineWidth = 2; ctx.strokeStyle = "grey"; ctx.stroke();
+		ctx.fillStyle = '#606060'; ctx.fill();
+		ctx.lineWidth = 2; ctx.strokeStyle = 'grey'; ctx.stroke();
 
 		ctx.beginPath();
 		ctx.arc(83, canvas.height - 67 + (200 - titleY), UI_POWERUP_SIZE * POWERUP_LENGTH / 2, 0, 2 * Math.PI, false);
-		ctx.fillStyle = "#606060"; ctx.fill();
-		ctx.lineWidth = 2; ctx.strokeStyle = "grey"; ctx.stroke();
+		ctx.fillStyle = '#606060'; ctx.fill();
+		ctx.lineWidth = 2; ctx.strokeStyle = 'grey'; ctx.stroke();
 
 		// Powerup display circles 2
 		ctx.beginPath();
 		ctx.arc(canvas.width - 22, canvas.height - 67 + (200 - titleY), UI_POWERUP_SIZE * POWERUP_LENGTH / 2, 0, 2 * Math.PI, false);
-		ctx.fillStyle = "#606060"; ctx.fill();
-		ctx.lineWidth = 2; ctx.strokeStyle = "grey"; ctx.stroke();
+		ctx.fillStyle = '#606060'; ctx.fill();
+		ctx.lineWidth = 2; ctx.strokeStyle = 'grey'; ctx.stroke();
 
 		ctx.beginPath();
 		ctx.arc(canvas.width - 52, canvas.height - 67 + (200 - titleY), UI_POWERUP_SIZE * POWERUP_LENGTH / 2, 0, 2 * Math.PI, false);
-		ctx.fillStyle = "#606060"; ctx.fill(); + (200 - titleY)
-		ctx.lineWidth = 2; ctx.strokeStyle = "grey"; ctx.stroke();
+		ctx.fillStyle = '#606060'; ctx.fill(); + (200 - titleY)
+		ctx.lineWidth = 2; ctx.strokeStyle = 'grey'; ctx.stroke();
 
 		ctx.beginPath();
 		ctx.arc(canvas.width - 82, canvas.height - 67 + (200 - titleY), UI_POWERUP_SIZE * POWERUP_LENGTH / 2, 0, 2 * Math.PI, false);
-		ctx.fillStyle = "#606060"; ctx.fill();
-		ctx.lineWidth = 2; ctx.strokeStyle = "grey"; ctx.stroke();
+		ctx.fillStyle = '#606060'; ctx.fill();
+		ctx.lineWidth = 2; ctx.strokeStyle = 'grey'; ctx.stroke();
 
 		// Powerup display 1
 		if (player1.speedBoost > 0)
@@ -972,24 +972,24 @@ function DrawUI()
 	// Borders
 	ctx.beginPath();
 	ctx.rect(0, 0, canvas.width, 5)
-	ctx.fillStyle = "grey";
+	ctx.fillStyle = 'grey';
 	ctx.fill();
 	ctx.beginPath();
 	ctx.rect(0, canvas.height, canvas.width, -5)
-	ctx.fillStyle = "grey";
+	ctx.fillStyle = 'grey';
 	ctx.fill();
 	ctx.beginPath();
 	ctx.rect(0, 0, 5, canvas.height)
-	ctx.fillStyle = "grey";
+	ctx.fillStyle = 'grey';
 	ctx.fill();
 	ctx.beginPath();
 	ctx.rect(canvas.width, 0, -5, canvas.height)
-	ctx.fillStyle = "grey";
+	ctx.fillStyle = 'grey';
 	ctx.fill();
 }
 
 // --- Returns to Menu ---
-function EndGame()
+function EndGame ()
 {
 	inGame = false;
 	titleY = 200;
@@ -1002,9 +1002,9 @@ function EndGame()
 }
 
 // --- Keyboard Input (Down) ---
-document.addEventListener("keydown", function(e)
+document.addEventListener('keydown', function (e)
 {
-	//console.log("" + event.keyCode);
+	//console.log('' + event.keyCode);
 
 	// Stops scrolling with arrows and space bar
     if([32, 37, 38, 39, 40].indexOf(e.keyCode) > -1)
@@ -1015,12 +1015,12 @@ document.addEventListener("keydown", function(e)
 		StartGame();
 		inGame = true;
 	}
-	
+
 	keysDown[e.keyCode] = true;
 });
 
 // --- Keyboard Input (Up) ---
-document.addEventListener("keyup", function(e)
+document.addEventListener('keyup', function (e)
 {
 	keysDown[e.keyCode] = false;
 });
