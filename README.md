@@ -15,7 +15,7 @@ All work is done in pure HTML and JavaScript. There are no libraries used in the
  
 ### Developing 
  
-The entirety of the game is located in the [javascript.js file](../javascript.js), with basic canvas setup and styling located in the [index.html](../index.html). All game resources are located in the [resources folder](../resources). 
+The entirety of the game is located in the [javascript.js](javascript.js) file, with basic canvas setup and styling located in the [index.html](index.html). All game resources are located in the [resources folder](resources). 
  
 ### Testing locally 
  
