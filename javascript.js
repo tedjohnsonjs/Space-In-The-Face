@@ -136,6 +136,7 @@ function Player (_x, _y, _sprite)
 			if (playingIntro || this.flyingOnScreen)
 			{
 				this.y -= 2;
+				this.immortalBoost = 50;
 				if (this.y <= canvas.height - 100)
 				{
 					player1.hasControl = true;
@@ -167,7 +168,7 @@ function Player (_x, _y, _sprite)
 					if (Math.abs(this.x - aliens[i].x) < (PLAYER_SIZE + aliens[i].size) / 2 && Math.abs(this.y - aliens[i].y) < (PLAYER_SIZE + aliens[i].size) / 2)
 					{
 						for (var j = 0; j < NUM_DEBRIS; j++) debris.push(new Debris(this.x, this.y));
-						if (this.immortalBoost == 0) this.health -= alienHealths[aliens[i].type];
+						if (this.immortalBoost == 0) this.health = 0;
 						aliens[i].Destroy();
 					}
 				}
@@ -378,7 +379,7 @@ function Alien (_x, _y, _type)
 
 		// Loop back to top if past bottom
 		if (this.y > canvas.height - 30) {
-			this.x = Math.floor(Math.random() * canvas.width);
+			this.x = Math.random() * (canvas.width - 100) + 50;
 			this.y = 20;
 		}
 
@@ -679,7 +680,7 @@ function UpdateWave ()
 		{
 			for (var i = 0; i < waves[curWave-1].length; i++)
 				aliens.push(new Alien(
-					Math.random() * canvas.width,
+					Math.random() * (canvas.width - 100) + 50,
 					(Math.random() * 100) - 100,
 					waves[curWave-1][i]));
 		}
@@ -688,7 +689,7 @@ function UpdateWave ()
 		{
 			for (var i = 0; i < curWave; i++)
 				aliens.push(new Alien(
-					Math.random() * canvas.width,
+					(Math.random() * canvas.width + alienSizes[0] * 4) - alienSizes[0] * 2,
 					(Math.random() * 100) - 100,
 					Math.floor(Math.random() * alienSprites.length)));
 		}
@@ -711,6 +712,7 @@ function UpdateWave ()
 		{
 			powerups.push(new Powerup(Math.random() * canvas.width, -Math.random() * 100));
 			powerups.push(new Powerup(Math.random() * canvas.width, -Math.random() * 100));
+			score += 2000;
 		}
 	}
 }
@@ -788,6 +790,14 @@ function Draw ()
 		ctx.fillStyle = 'red';
 		ctx.font = '100px Arial';
 		ctx.fillText('FACE', (canvas.width/2 - 130) + addedX, ((193 - titleY) + addedY));
+
+		// Latest Score
+		if (score != 0)
+		{
+			ctx.fillStyle = 'white';
+			ctx.font = '15px Arial';
+			ctx.fillText('Last Round: ' + score, canvas.width/2 - 59, (35 - titleY));
+		}
 
 		// Line
 		ctx.beginPath();
